@@ -1,23 +1,20 @@
 import Table from "react-bootstrap/Table";
-import { useEffect, useState } from "react";
-
-interface IUser {
-  id: number;
-  name: string;
-  email: string;
-}
+import { useEffect } from "react";
+import { useAppDispatch, useAppSelector } from "../redux/hooks";
+import { fetchListUsers } from "../redux/user/user.slice";
 
 function UsersTable() {
-  const [users, setUsers] = useState<IUser[]>([]);
-
-  const fetchUsers = async () => {
-    const res = await fetch("http://localhost:8000/users");
-    const data = await res.json();
-    setUsers(data);
-  };
+  const users = useAppSelector((state) => state.user.listUsers);
+  const dispatch = useAppDispatch();
+  //   const fetchUsers = async () => {
+  //     const res = await fetch("http://localhost:8000/users");
+  //     const data = await res.json();
+  //     setUsers(data);
+  //   };
 
   useEffect(() => {
-    fetchUsers();
+    // fetchUsers();
+    dispatch(fetchListUsers());
   }, []);
 
   return (
